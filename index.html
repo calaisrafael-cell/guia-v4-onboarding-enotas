@@ -1,1510 +1,195 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia de Configurações eNotas</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-            padding: 40px 20px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: #f8f9fa;
-            padding: 50px 40px 40px 40px;
-            text-align: center;
-            color: #333;
-            position: relative;
-        }
-
-        .help-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: white;
-            color: #00BFA5;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            border: 2px solid #00BFA5;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .help-button:hover {
-            background: #00BFA5;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #B8479D;
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.85;
-            color: #555;
-        }
-
-        .content {
-            padding: 40px;
-        }
-
-        .step {
-            margin-bottom: 40px;
-            padding: 30px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            border-left: 5px solid #B8479D;
-        }
-
-        .step:last-child {
-            margin-bottom: 0;
-        }
-
-        .step-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-            padding-right: 40px;
-        }
-
-        .step-header:hover {
-            opacity: 0.8;
-        }
-
-        .arrow {
-            position: absolute;
-            right: 10px;
-            font-size: 24px;
-            color: #B8479D;
-            transition: transform 0.3s ease;
-        }
-
-        .arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .step-number {
-            background: linear-gradient(135deg, #00BFA5 0%, #00a896 100%);
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .step-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #B8479D;
-        }
-
-        .step-content {
-            font-size: 15px;
-            color: #555;
-            line-height: 1.8;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, margin-top 0.4s ease;
-            margin-top: 0;
-        }
-
-        .step-content.open {
-            max-height: 15000px;
-            margin-top: 20px;
-        }
-
-        .step-content p {
-            margin-bottom: 15px;
-        }
-
-        .step-content ul {
-            margin-left: 20px;
-            margin-top: 15px;
-        }
-
-        .step-content li {
-            margin-bottom: 10px;
-        }
-
-        .gif-placeholder {
-            background: linear-gradient(135deg, #e8f5f3 0%, #d4ede8 100%);
-            border: 2px dashed #00BFA5;
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            margin: 20px 0;
-            color: #00a896;
-            font-weight: 500;
-        }
-
-        .gif-placeholder::before {
-            content: "🎬";
-            display: block;
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .highlight {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #ff9800;
-            margin: 20px 0;
-        }
-
-        .highlight strong {
-            color: #f57c00;
-        }
-
-        a {
-            color: #00BFA5;
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        a:hover {
-            color: #00a896;
-            border-bottom: 2px solid #00BFA5;
-        }
-
-        .integration-link {
-            display: block;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .integration-link:hover {
-            border-color: #B8479D;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(184, 71, 157, 0.2);
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, #e8f0fe 0%, #d2e3fc 100%);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border-left: 4px solid #1976d2;
-        }
-
-        .info-box strong {
-            color: #1565c0;
-        }
-
-        .email-text {
-            font-family: 'Courier New', monospace;
-            background: #f5f5f5;
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: #B8479D;
-            font-weight: 600;
-        }
-
-        .portal-text {
-            font-style: italic;
-            color: #666;
-        }
-
-        .header .image-placeholder {
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            height: 50px;
-            width: 150px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .image-placeholder {
-            width: 20px;
-            height: 20px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        /* Pop-up Contabilidade */
-        .popup-contabilidade {
-            position: fixed;
-            top: 150px;
-            left: 20px;
-            width: 220px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            z-index: 1000;
-            opacity: 0;
-            transform: translateX(-100%);
-            transition: all 0.5s ease;
-            overflow: hidden;
-        }
-
-        .popup-contabilidade.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .popup-contabilidade.minimized {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .popup-contabilidade.minimized .popup-content,
-        .popup-contabilidade.minimized .popup-header {
-            display: none;
-        }
-
-        .popup-contabilidade.minimized .popup-minimized-icon {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .popup-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 10px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .popup-header-title {
-            font-weight: 600;
-            font-size: 12px;
-        }
-
-        .popup-header-buttons {
-            display: flex;
-            gap: 6px;
-        }
-
-        .popup-header-buttons button {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 22px;
-            height: 22px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-
-        .popup-header-buttons button:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .popup-minimized-icon {
-            display: none;
-            color: white;
-            font-size: 20px;
-        }
-
-        .popup-content {
-            padding: 12px 14px;
-        }
-
-        .popup-content p {
-            margin: 0 0 8px 0;
-            color: #333;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        .popup-content a {
-            color: #667eea;
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 2px solid #667eea;
-            transition: all 0.3s ease;
-        }
-
-        .popup-content a:hover {
-            color: #764ba2;
-            border-bottom-color: #764ba2;
-        }
-
-        /* Estilos para Subguias */
-        .substep {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            border-left: 4px solid #ff9800;
-        }
-
-        .substep:last-child {
-            margin-bottom: 0;
-        }
-
-        .substep-header {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-            padding-right: 30px;
-        }
-
-        .substep-header:hover {
-            opacity: 0.8;
-        }
-
-        .substep-number {
-            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: bold;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        .substep-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #f57c00;
-        }
-
-        .substep-arrow {
-            position: absolute;
-            right: 5px;
-            font-size: 18px;
-            color: #ff9800;
-            transition: transform 0.3s ease;
-        }
-
-        .substep-arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .substep-content {
-            font-size: 14px;
-            color: #555;
-            line-height: 1.7;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, margin-top 0.4s ease;
-            margin-top: 0;
-        }
-
-        .substep-content.open {
-            max-height: 8000px;
-            margin-top: 15px;
-        }
-
-        .substep-content p {
-            margin-bottom: 12px;
-        }
-
-        .substep-content ol {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .substep-content li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        .substep-info-box {
-            background: #fff3e0;
-            border-left: 3px solid #ff9800;
-            padding: 12px;
-            border-radius: 6px;
-            margin: 15px 0;
-            font-size: 13px;
-        }
-
-        .substep-info-box strong {
-            color: #f57c00;
-        }
-
-        .porte-selector {
-            border: 2px solid #ff9800;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            background: #fffaf0;
-        }
-
-        .porte-selector p {
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: #f57c00;
-            font-size: 14px;
-        }
-
-        .porte-info {
-            display: none;
-            background: #fff3e0;
-            border-left: 3px solid #ff9800;
-            padding: 12px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
-
-        .porte-info p {
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #f57c00;
-            font-size: 13px;
-        }
-
-        .porte-info ul {
-            margin-left: 15px;
-            color: #555;
-            font-size: 13px;
-        }
-
-        .porte-info li {
-            margin-bottom: 6px;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 24px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .step {
-                padding: 20px;
-            }
-
-            .step-title {
-                font-size: 18px;
-            }
-
-            .substep {
-                padding: 15px;
-            }
-
-            .substep-title {
-                font-size: 14px;
-            }
-
-            .substep-number {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="7;url=https://enotas.com.br/guiaconfiguracoes/">
+  <title>Guia de Configurações — eNotas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #222222;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      padding: 48px 40px 40px;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+    }
+    .logo-wrap {
+      height: 36px;
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-wrap img { height: 100%; width: auto; object-fit: contain; }
+    .icon-wrap {
+      width: 64px;
+      height: 64px;
+      background: #111111;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111111;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #555555;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .countdown-wrap {
+      background: #f8f8f8;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+    .countdown-label {
+      font-size: 13px;
+      color: #888888;
+      margin-bottom: 10px;
+    }
+    .countdown-number {
+      font-size: 42px;
+      font-weight: 700;
+      color: #111111;
+      line-height: 1;
+      margin-bottom: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+    .progress-bar-bg {
+      background: #e8e8e8;
+      border-radius: 99px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 100%;
+      background: #111111;
+      border-radius: 99px;
+      transform-origin: left;
+      animation: countdown 7s linear forwards;
+    }
+    @keyframes countdown {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0); }
+    }
+    .btn-redirect {
+      display: inline-block;
+      width: 100%;
+      padding: 14px 24px;
+      background: #111111;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      margin-bottom: 12px;
+    }
+    .btn-redirect:hover { background: #333333; transform: translateY(-1px); }
+    .btn-skip {
+      font-size: 13px;
+      color: #999999;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      text-decoration: underline;
+    }
+    .btn-skip:hover { color: #555555; }
+    @media (max-width: 480px) {
+      .card { padding: 36px 24px 32px; }
+      h1 { font-size: 20px; }
+      .countdown-number { font-size: 36px; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Pop-up Contabilidade -->
-    <div id="popup-contabilidade" class="popup-contabilidade">
-        <div class="popup-minimized-icon">💼</div>
-        <div class="popup-header">
-            <span class="popup-header-title">💼 Contabilidade</span>
-            <div class="popup-header-buttons">
-                <button onclick="event.stopPropagation(); minimizePopup();" title="Minimizar">−</button>
-                <button onclick="event.stopPropagation(); closePopup();" title="Fechar">×</button>
-            </div>
-        </div>
-        <div class="popup-content">
-            <p><strong>Ainda não possui contabilidade?</strong></p>
-            <p>Faça contato com uma de nossas <a href="https://extensoes.hotmart.com/parceiros-enotas" target="_blank">contabilidades parceiras</a>.</p>
-        </div>
+  <div class="card">
+    <div class="logo-wrap">
+      <img src="images/logo.png" alt="eNotas">
     </div>
 
-    <div class="container">
-        <div class="header">
-            <!-- Espaço para o logo -->
-            <a href="https://app.enotas.com.br/" target="_blank" style="text-decoration: none;">
-            <div class="image-placeholder">
-    <img src="images/img_png_1.png" alt="Imagem 1" style="max-width: 100%; height: auto;">
-</div>
-            </a>
-            
-            <!-- Botão de Ajuda -->
-            <a href="https://atendimento.enotas.com.br/hc/pt-br" target="_blank" class="help-button">AJUDA</a>
-            
-            <div>
-                <h1>Guia de Configurações eNotas</h1>
-                <p>Siga as etapas para configurar a sua conta e dar início as emissões automágicas</p>
-            </div>
-        </div>
-
-        <div class="content">
-            <!-- Etapa 1 -->
-            <div class="step">
-                <div class="step-header" onclick="toggleStep(this)">
-                    <div class="step-number">1</div>
-                    <h2 class="step-title">Criação de conta</h2>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="step-content">
-                    <p>No e-mail que utilizou para realizar a assinatura do eNotas, irá receber um link para a criação da sua conta <strong>"Pessoa Jurídica"</strong> em nossa plataforma.</p>
-                    
-                    <p>Abrindo o link, irá aparecer as informações, basta preencher e clicar em <strong>"Criar conta"</strong>.</p>
-
-                    <div class="gif-container">
-                        <img src="images/img_gif_1.gif" alt="GIF 1" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                    <p style="font-style: italic; color: #666; font-size: 13px; margin-top: 10px;">
-                        Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Etapa 2 -->
-            <div class="step">
-                <div class="step-header" onclick="toggleStep(this)">
-                    <div class="step-number">2</div>
-                    <h2 class="step-title">Configurar a emissão de notas</h2>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="step-content">
-                    <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800; margin: 20px 0;">
-                        <strong style="color: #f57c00;">Emissão via Portal Nacional</strong>
-                        <p style="margin-top: 10px; margin-bottom: 10px; color: #555;">Além das atualizações exigidas pela <strong>Reforma Tributária</strong>, as prefeituras de alguns municípios estão se adaptando ao novo modelo de emissão da Nota Fiscal de Serviço (NFS-e), o <strong>Portal de Gestão da NFS-e</strong>.</p>
-                        <p style="margin-bottom: 10px; color: #555;">Com isso, alguns dados que antes não eram obrigatórios passaram a ser exigidos.</p>
-                        <p style="margin-bottom: 10px; color: #555;">Caso você esteja enfrentando dificuldades na emissão das notas fiscais, pode ser necessário ajustar as configurações da sua conta.</p>
-                        <p style="margin-bottom: 15px; color: #555;">Com as informações abaixo e o apoio da sua contabilidade, você consegue realizar os ajustes seguindo o passo a passo a seguir.</p>
-                        
-                        <p style="margin-bottom: 15px; font-style: italic; color: #666; font-size: 13px;">
-                            Se ainda não possui contabilidade, veja nossas <a href="https://extensoes.hotmart.com/parceiros-enotas" target="_blank">parceiras</a>.
-                        </p>
-
-                        <!-- SUBGUIAS DO PORTAL NACIONAL -->
-                        <div style="margin-top: 20px;">
-                            <!-- Subguia 2.1 - Credenciamento para emissão -->
-                            <div class="substep">
-                                <div class="substep-header" onclick="toggleSubStep(this)">
-                                    <div class="substep-number">2.1</div>
-                                    <h3 class="substep-title">Credenciamento para emissão</h3>
-                                    <span class="substep-arrow">▼</span>
-                                </div>
-                                <div class="substep-content">
-                                    <p><strong>Primeiramente valide, junto a sua contabilidade, se o seu município aderiu às emissões junto ao Portal Nacional.</strong></p>
-
-                                    <p>Para que a emissão de NFS-e Nacional ocorra, é necessário que a empresa realize o credenciamento no Portal Nacional.</p>
-
-                                    <ol>
-                                        <li>Acesse o <a href="https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2fEmissorNacional" target="_blank">Portal de Gestão NFS-e</a>.</li>
-                                        <li>Clique em <strong>"Fazer primeiro acesso"</strong>.</li>
-                                        <li>Selecione a opção <strong>"CNPJ"</strong> e preencha as informações solicitadas, clique em <strong>"Avançar"</strong>.</li>
-                                        <li>Caso tenha realizado a declaração de IRPF, irá ser solicitado o número do recibo da mesma. Caso não, será solicitado o número do seu título de eleitor. Preencha e clique em <strong>"Avançar"</strong>.</li>
-                                        <li>Informe o email e a senha que deseja utilizar para acessar o Portal Nacional, clique em <strong>"Avançar"</strong>.</li>
-                                        <li>Para validar seu cadastro, acesse o seu e-mail e copie o código numérico enviado.</li>
-                                        <li>Cole o código recebido no campo indicado e clique em <strong>"Avançar"</strong>.</li>
-                                        <li>Clique em <strong>"Fazer login"</strong>.</li>
-                                        <li>Informe os dados que utilizou para criar o acesso e clique em <strong>"Entrar"</strong>.</li>
-                                        <li>Clique no ícone de engrenagem (⚙️) na parte superior esquerda da tela.</li>
-                                        <li>Preencha os campos de e-mail e telefone.</li>
-                                        <li>Verifique com a contabilidade da empresa qual campo deve ser assinalado referente a informação de tributos destacados na nota fiscal.</li>
-                                        <li>Clique em <strong>"Salvar"</strong>.</li>
-                                    </ol>
-
-                                    <div class="gif-container">
-                        <img src="images/img_gif_2.gif" alt="GIF 2" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                                    <p style="font-style: italic; color: #666; font-size: 12px; margin-top: 8px;">
-                                        Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                                    </p>
-                                    <p style="font-style: italic; color: #666; font-size: 12px; margin-top: 8px;">
-                                        Para consultar as configurações completas do portal nacional, <a href="https://enotas-configuracoes.hotmart.host/portalnacional" target="_blank">clique aqui</a>.
-                                    </p>
-
-                                    <div class="substep-info-box">
-                                        <strong>❓ Dúvidas?</strong>
-                                        <p style="margin-top: 6px;">Caso ainda possua dúvidas quanto a configuração, poderá acessar este <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773611534221--Portal-Nacional-Como-solicitar-o-credenciamento-para-Emiss%C3%A3o-de-Nota-Fiscal-de-Servi%C3%A7o-Eletr%C3%B4nica" target="_blank">artigo</a> completo.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Subguia 2.2 - Configuração NFS-e eNotas -->
-                            <div class="substep">
-                                <div class="substep-header" onclick="toggleSubStep(this)">
-                                    <div class="substep-number">2.2</div>
-                                    <h3 class="substep-title">Configuração NFS-e eNotas</h3>
-                                    <span class="substep-arrow">▼</span>
-                                </div>
-                                <div class="substep-content">
-                                    <p><strong>Sugerimos que as configurações sejam feitas com a ajuda da sua contabilidade, são dados extremamente importantes!</strong></p>
-                                    <p style="font-style: italic; color: #666; font-size: 12px; margin-top: 8px;">
-                                        Para consultar as configurações completas do portal nacional, <a href="https://enotas-configuracoes.hotmart.host/portalnacional" target="_blank">clique aqui</a>.
-                                    </p>
-
-                                    <p>Após realizar o credenciamento da sua empresa para emissão pelo portal nacional, siga os passos abaixo:</p>
-
-                                    <ol>
-                                        <li>Acesse sua conta <a href="https://app.enotas.com.br/" target="_blank">eNotas</a>.</li>
-                                        <li>Vá em <strong>"Empresa"</strong> e clique em <strong>"Configurar conta"</strong> ou <strong>"Alterar Cadastro"</strong>.</li>
-                                        <li>Vá a aba <strong>"Dados Municipais"</strong>.</li>
-                                    </ol>
-
-                                    <div class="porte-selector">
-                                        <p>🏢 Qual o tipo de porte da sua empresa?</p>
-                                        <div style="margin-left: 0;">
-                                            <div style="margin-bottom: 8px;">
-                                                <input type="radio" id="mei-option" name="porte" value="MEI" onchange="toggleMEIInfo()">
-                                                <label for="mei-option" style="font-weight: 500; font-size: 13px;">MEI</label>
-                                            </div>
-                                            <div style="margin-bottom: 8px;">
-                                                <input type="radio" id="me-option" name="porte" value="ME" onchange="toggleMEIInfo()">
-                                                <label for="me-option" style="font-weight: 500; font-size: 13px;">ME</label>
-                                            </div>
-                                            <div style="margin-bottom: 8px;">
-                                                <input type="radio" id="epp-option" name="porte" value="EPP" onchange="toggleMEIInfo()">
-                                                <label for="epp-option" style="font-weight: 500; font-size: 13px;">EPP</label>
-                                            </div>
-                                            <div style="margin-bottom: 8px;">
-                                                <input type="radio" id="medio-option" name="porte" value="Médio" onchange="toggleMEIInfo()">
-                                                <label for="medio-option" style="font-weight: 500; font-size: 13px;">Empresa de Médio porte</label>
-                                            </div>
-                                            <div style="margin-bottom: 0;">
-                                                <input type="radio" id="grande-option" name="porte" value="Grande" onchange="toggleMEIInfo()">
-                                                <label for="grande-option" style="font-weight: 500; font-size: 13px;">Grande Empresa</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Informação sobre Série/RPS -->
-                                    <div style="background: #f8f9fa; border-left: 3px solid #ff9800; padding: 12px; border-radius: 6px; margin: 15px 0;">
-                                        <p style="margin-bottom: 10px; color: #555; font-size: 13px;">Para configuração da série e número do próximo RPS, deverá seguir as regras abaixo:</p>
-                                        <ul style="margin-left: 15px; color: #555; font-size: 13px;">
-                                            <li style="margin-bottom: 6px;"><strong>Importar Certificado Digital A1:</strong> neste cenário, a série utilizada deverá ser entre 1 a 49999.</li>
-                                            <li style="margin-bottom: 6px;"><strong>Autenticar com Usuário e Senha:</strong> neste cenário, a série utilizada deverá ser entre 80000 a 89999.</li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- Informação expandível para MEI -->
-                                    <div id="mei-info" class="porte-info">
-                                        <p>Para configuração de nota fiscal de serviço para MEI, será necessário preencher os seguintes campos:</p>
-                                        <ul>
-                                            <li>Inscrição Municipal (Se aplicável)</li>
-                                            <li>Porte da empresa</li>
-                                            <li>Método de autenticação (Certificado digital ou login e senha)</li>
-                                            <li>Código de Tributação Nacional</li>
-                                            <li>Código de Tributação Municipal</li>
-                                            <li>Código NBS, Classificação Tributária e Indicador de Operação (Se aplicável)</li>
-                                            <li>Tipo de nota que irá emitir</li>
-                                            <li>Série/RPS/Lote</li>
-                                            <li>Tipo de nota padrão para novos produtos</li>
-                                        </ul>
-                                        <div class="gif-container">
-                        <img src="images/img_gif_3.gif" alt="GIF 3" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                                        <p style="font-style: italic; color: #666; font-size: 12px;">
-                                            Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                                        </p>
-                                    </div>
-
-                                    <!-- Informação expandível para ME -->
-                                    <div id="me-info" class="porte-info">
-                                        <p>Para configuração de nota fiscal de serviço para ME, será necessário preencher os seguintes campos:</p>
-                                        <ul>
-                                            <li>Inscrição Municipal (Se aplicável)</li>
-                                            <li>Porte da empresa</li>
-                                            <li>Optante do Simples Nacional</li>
-                                            <li>Emitir pelo Portal de Gestão NFS-e (Sim)</li>
-                                            <li>Regime especial de tributação</li>
-                                            <li>Regime de Apuração de Tributo do Simples Nacional</li>
-                                            <li>Método de autenticação (Certificado digital ou login e senha)</li>
-                                            <li>Código de Tributação Nacional</li>
-                                            <li>Código de Tributação Municipal</li>
-                                            <li>Alíquota ISS</li>
-                                            <li>Código NBS, Classificação Tributária e Indicador de Operação (Se aplicável)</li>
-                                            <li>Percentual Aproximado dos tributos (municipal e federal)</li>
-                                            <li>Tipo de nota que irá emitir</li>
-                                            <li>Série/RPS/Lote</li>
-                                            <li>Tipo de nota padrão para novos produtos</li>
-                                        </ul>
-                                        <div class="gif-container">
-                        <img src="images/img_gif_4.gif" alt="GIF 4" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                                        <p style="font-style: italic; color: #666; font-size: 12px;">
-                                            Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                                        </p>
-                                    </div>
-
-                                    <!-- Informação expandível para EPP -->
-                                    <div id="epp-info" class="porte-info">
-                                        <p>Para configuração de nota fiscal de serviço para EPP, será necessário preencher os seguintes campos:</p>
-                                        <ul>
-                                            <li>Inscrição Municipal (Se aplicável)</li>
-                                            <li>Porte da empresa</li>
-                                            <li>Optante do Simples Nacional</li>
-                                            <li>Emitir pelo Portal de Gestão NFS-e (Sim)</li>
-                                            <li>Regime especial de tributação</li>
-                                            <li>Regime de Apuração de Tributo do Simples Nacional</li>
-                                            <li>Método de autenticação (Certificado digital ou login e senha)</li>
-                                            <li>Código de Tributação Nacional</li>
-                                            <li>Código de Tributação Municipal</li>
-                                            <li>Alíquota ISS</li>
-                                            <li>Código NBS, Classificação Tributária e Indicador de Operação (Se aplicável)</li>
-                                            <li>Percentual Aproximado dos tributos (municipal e federal)</li>
-                                            <li>Tipo de nota que irá emitir</li>
-                                            <li>Série/RPS/Lote</li>
-                                            <li>Tipo de nota padrão para novos produtos</li>
-                                        </ul>
-                                        <div class="gif-container">
-                        <img src="images/img_gif_5.gif" alt="GIF 5" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                                        <p style="font-style: italic; color: #666; font-size: 12px;">
-                                            Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                                        </p>
-                                    </div>
-
-                                    <!-- Informação expandível para Empresa de Médio Porte -->
-                                    <div id="medio-info" class="porte-info">
-                                        <p>Para configuração de nota fiscal de serviço para Empresa de Médio Porte, será necessário preencher os seguintes campos:</p>
-                                        <ul>
-                                            <li>Inscrição Municipal (Se aplicável)</li>
-                                            <li>Porte da empresa</li>
-                                            <li>Emitir pelo Portal de Gestão NFS-e (Sim)</li>
-                                            <li>Regime especial de tributação</li>
-                                            <li>Método de autenticação (Certificado digital ou login e senha)</li>
-                                            <li>Código de Tributação Nacional</li>
-                                            <li>Código de Tributação Municipal</li>
-                                            <li>Alíquota ISS</li>
-                                            <li>Código NBS, Classificação Tributária e Indicador de Operação (Se aplicável)</li>
-                                            <li>Percentual Aproximado dos tributos (municipal e federal)</li>
-                                            <li>Tipo de nota que irá emitir</li>
-                                            <li>Série/RPS/Lote</li>
-                                            <li>Tipo de nota padrão para novos produtos</li>
-                                        </ul>
-                                        <div class="gif-container">
-                        <img src="images/img_gif_6.gif" alt="GIF 6" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                                        <p style="font-style: italic; color: #666; font-size: 12px;">
-                                            Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                                        </p>
-                                    </div>
-
-                                    <!-- Informação expandível para Grande Empresa -->
-                                    <div id="grande-info" class="porte-info">
-                                        <p>Para configuração de nota fiscal de serviço para Grande Empresa, será necessário preencher os seguintes campos:</p>
-                                        <ul>
-                                            <li>Inscrição Municipal (Se aplicável)</li>
-                                            <li>Porte da empresa</li>
-                                            <li>Emitir pelo Portal de Gestão NFS-e (Sim)</li>
-                                            <li>Regime especial de tributação</li>
-                                            <li>Método de autenticação (Certificado digital ou login e senha)</li>
-                                            <li>Código de Tributação Nacional</li>
-                                            <li>Código de Tributação Municipal</li>
-                                            <li>Alíquota ISS</li>
-                                            <li>Código NBS, Classificação Tributária e Indicador de Operação (Se aplicável)</li>
-                                            <li>Percentual Aproximado dos tributos (municipal e federal)</li>
-                                            <li>Tipo de nota que irá emitir</li>
-                                            <li>Série/RPS/Lote</li>
-                                            <li>Tipo de nota padrão para novos produtos</li>
-                                        </ul>
-                                        <div class="gif-container">
-                        <img src="images/img_gif_7.gif" alt="GIF 7" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                                        <p style="font-style: italic; color: #666; font-size: 12px;">
-                                            Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Subguia 2.3 - Configuração NF-e eNotas -->
-                            <div class="substep">
-                                <div class="substep-header" onclick="toggleSubStep(this)">
-                                    <div class="substep-number">2.3</div>
-                                    <h3 class="substep-title">Configuração NF-e eNotas</h3>
-                                    <span class="substep-arrow">▼</span>
-                                </div>
-                                <div class="substep-content">
-                                    <p>Devido a aplicação da reforma tributária a partir de 01/01/2026, foi adicionado um novo campo <strong>"Classificação Tributária/CST (IBS/CBS)"</strong>, para a configuração da nota de produto.</p>
-                                    <p style="font-style: italic; color: #666; font-size: 12px; margin-top: 8px;">
-                                        Para consultar as configurações completas do portal nacional, <a href="https://enotas-configuracoes.hotmart.host/portalnacional" target="_blank">clique aqui</a>.
-                                    </p>
-
-                                    <ol>
-                                        <li>Acesse sua conta <a href="https://app.enotas.com.br/" target="_blank">eNotas</a>.</li>
-                                        <li>Vá em <strong>"Empresa"</strong> e clique em <strong>"Configurar conta"</strong> ou <strong>"Alterar Cadastro"</strong>.</li>
-                                        <li>Vá a aba <strong>"Dados Municipais"</strong> e posteriormente na aba <strong>"Produto padrão"</strong> ou <strong>"NF-e padrão para produto físico"</strong>.</li>
-                                    </ol>
-
-                                    <p>Abaixo as informações necessárias para configuração da nota de produto (NF-e):</p>
-
-                                    <ul style="margin-left: 15px; margin-top: 10px; color: #555; font-size: 13px;">
-                                        <li style="margin-bottom: 6px;">Inscrição Estadual</li>
-                                        <li style="margin-bottom: 6px;">Regime de Tributação e Optante do Simples Nacional</li>
-                                        <li style="margin-bottom: 6px;">Tipo de nota que irá emitir</li>
-                                        <li style="margin-bottom: 6px;">Série/Nº próxima nota/Lote</li>
-                                        <li style="margin-bottom: 6px;">Tipo de nota padrão para novos produtos</li>
-                                        <li style="margin-bottom: 6px;">Produto padrão ou NF-e padrão para produto físico</li>
-                                    </ul>
-
-                                    <div class="gif-container">
-                        <img src="images/img_gif_8.gif" alt="GIF 8" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-
-                                    <div class="substep-info-box">
-                                        <strong>❓ Dúvidas?</strong>
-                                        <p style="margin-top: 6px;">Caso ainda possua dúvidas quanto a configuração, poderá acessar este <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773343446541--Menu-Gerenciar-Produtos-Como-configurar-meus-produtos-para-emitir-notas-de-produto-NF-e-na-eNotas" target="_blank">artigo</a> completo.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p style="margin-bottom: 15px;"><strong>Caso a informação acima não se aplique</strong>, siga com o preenchimento dos dados conforme instruído pela sua contabilidade, em <strong>"Empresa > Configurar conta / Alterar cadastro"</strong>.</p>
-
-                    <!-- SEÇÃO: QUAL TIPO DE NOTA FISCAL -->
-                    <div style="margin-top: 30px; padding: 25px; background: white; border-radius: 12px; border: 2px solid #B8479D;">
-                        <h3 style="color: #B8479D; font-size: 18px; margin-bottom: 20px;">Qual tipo de nota fiscal você irá emitir?</h3>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 12px; cursor: pointer; font-size: 16px;">
-                                <input type="checkbox" id="nfse-check" onclick="toggleNotaInfo('nfse')" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer; vertical-align: middle;">
-                                <strong>NFS-e</strong> (Nota Fiscal de Serviço Eletrônica)
-                            </label>
-                            
-                            <label style="display: block; margin-bottom: 12px; cursor: pointer; font-size: 16px;">
-                                <input type="checkbox" id="nfe-check" onclick="toggleNotaInfo('nfe')" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer; vertical-align: middle;">
-                                <strong>NF-e</strong> (Nota Fiscal de Produto Eletrônica)
-                            </label>
-                            
-                            <label style="display: block; cursor: pointer; font-size: 16px;">
-                                <input type="checkbox" id="split-check" onclick="toggleNotaInfo('split')" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer; vertical-align: middle;">
-                                <strong>Split</strong> (NFS-e + NF-e)
-                            </label>
-                        </div>
-
-                        <!-- NFS-e Section -->
-                        <div id="nfse-info" style="display: none; margin-top: 25px; padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #00BFA5;">
-                            <h4 style="color: #00BFA5; margin-bottom: 15px; font-size: 16px;">Configuração NFS-e</h4>
-                            <p style="margin-bottom: 15px;">Para configuração de nota fiscal de serviço <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773771326349--Menu-Empresa-Preenchimento-dos-Dados-Municipais-na-eNotas" target="_blank">(NFS-e)</a>, será necessário preencher os seguintes campos:</p>
-                            
-                            <ul style="margin-left: 20px; line-height: 2;">
-                                <li>Inscrição Municipal</li>
-                                <li>Porte da empresa</li>
-                                <li>Regime de Tributação e Optante do Simples Nacional</li>
-                                <li>Serviço Municipal (CNAE) e Alíquota ISS</li>
-                                <li>Percentual Aproximado dos tributos (municipal e federal)</li>
-                                <li>Tipo de nota que irá emitir</li>
-                                <li>Série/RPS/Lote</li>
-                                <li>Tipo de nota padrão para novos produtos</li>
-                            </ul>
-
-                            <div class="gif-container">
-                        <img src="images/img_gif_9.gif" alt="GIF 9" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                            <p style="font-style: italic; color: #666; font-size: 13px; margin-top: 10px;">
-                                Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                            </p>
-                        </div>
-
-                        <!-- NF-e Section -->
-                        <div id="nfe-info" style="display: none; margin-top: 25px; padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #ff9800;">
-                            <h4 style="color: #ff9800; margin-bottom: 15px; font-size: 16px;">Configuração NF-e</h4>
-                            <p style="margin-bottom: 15px;">Serão necessárias as seguintes informações para configuração de nota de produto <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773343446541--Menu-Gerenciar-Como-configurar-meus-produtos-para-emitir-notas-de-produto-NF-e-na-eNotas" target="_blank">(NF-e)</a>:</p>
-                            
-                            <ul style="margin-left: 20px; line-height: 2;">
-                                <li>Inscrição Estadual</li>
-                                <li>Porte da empresa</li>
-                                <li>Regime de Tributação e Optante do Simples Nacional</li>
-                                <li>Tipo de nota que irá emitir</li>
-                                <li>Série/Nº próxima nota/Lote</li>
-                                <li>Tipo de nota padrão para novos produtos</li>
-                                <li>Produto padrão ou NF-e padrão para produto físico</li>
-                            </ul>
-
-                            <div class="gif-container">
-                        <img src="images/img_gif_10.gif" alt="GIF 10" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                            <p style="font-style: italic; color: #666; font-size: 13px; margin-top: 10px;">
-                                Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                            </p>
-                        </div>
-
-                        <!-- Split Section -->
-                        <div id="split-info" style="display: none; margin-top: 25px; padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #B8479D;">
-                            <h4 style="color: #B8479D; margin-bottom: 15px; font-size: 16px;">Configuração Split</h4>
-                            <p style="margin-bottom: 15px;">Para emissão Split <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773350857869-Como-configurar-o-Split-de-notas-no-meu-painel" target="_blank">(NFS-e + NF-e)</a>, serão necessárias as seguintes informações:</p>
-                            
-                            <ul style="margin-left: 20px; line-height: 2;">
-                                <li>Inscrição Municipal e Estadual</li>
-                                <li>Porte da empresa</li>
-                                <li>Regime de Tributação e Optante do Simples Nacional</li>
-                                <li>Serviço Municipal (CNAE) e Alíquota ISS</li>
-                                <li>Percentual Aproximado dos tributos (municipal e federal)</li>
-                                <li>Tipo de nota que irá emitir</li>
-                                <li>Série/RPS/Nºnota/Lote</li>
-                                <li>Tipo de nota padrão para novos produtos</li>
-                                <li>Produto Padrão</li>
-                                <li>Ajuste de percentual para cada nota</li>
-                            </ul>
-
-                            <div class="gif-container">
-                        <img src="images/img_gif_11.gif" alt="GIF 11" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                            <p style="font-style: italic; color: #666; font-size: 13px; margin-top: 10px;">
-                                Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Certificado Digital -->
-                    <div style="margin-top: 30px; padding: 25px; background: white; border-radius: 12px; border: 2px solid #1976d2;">
-                        <h3 style="color: #1976d2; font-size: 18px; margin-bottom: 20px; display: flex; align-items: center;">
-                            Certificado Digital
-                        </h3>
-                        
-                        <p style="margin-bottom: 15px; color: #555; line-height: 1.8;">
-                            Algumas prefeituras exigem o certificado digital para integração com o município, via webservice.
-                        </p>
-                        
-                        <p style="margin-bottom: 15px; color: #555; line-height: 1.8;">
-                            O certificado digital a ser usado, deverá ser o modelo <strong>A1</strong>. Caso ainda não possua um certificado digital, poderá adquirir <a href="https://enotas.com.br/certificado/brasil-certificados-digitais/" target="_blank">por aqui</a>.
-                        </p>
-                        
-                        <p style="margin-bottom: 15px; color: #555; line-height: 1.8;">
-                            Para incluir o certificado digital na plataforma, basta ir em <strong>"Empresa > Configurar conta / Alterar cadastro > <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773480148493--Menu-Empresa-Como-inserir-ou-atualizar-meu-certificado-digital-na-eNotas" target="_blank">Certificado digital A1</a>"</strong>.
-                        </p>
-
-                        <div class="gif-container">
-                        <img src="images/img_gif_12.gif" alt="GIF 12" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                        <p style="font-style: italic; color: #666; font-size: 13px; margin-top: 10px;">
-                            Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                        </p>
-		</div>
-
-<!-- Endereço Padrão -->
-                        <div style="margin-top: 30px; padding: 25px; background: white; border-radius: 12px; border: 2px solid #00BFA5;">
-                        <h3 style="color: #00BFA5; font-size: 18px; margin-bottom: 20px; display: flex; align-items: center;">
-                            Endereço Padrão
-                        </h3>
-                        
-                        <p style="margin-bottom: 15px; color: #555; line-height: 1.8;">
-                            Temos uma configuração paliativa para caso você não solicite o endereço dos seus clientes, basta configurar um <a href="https://atendimento.enotas.com.br/hc/pt-br/search?utf8=%E2%9C%93&query=endere%C3%A7o+padr%C3%A3o" target="_blank">Endereço Padrão</a> conforme abaixo:
-                        </p>
-
-                        <div class="gif-container">
-                        <img src="images/img_gif_13.gif" alt="GIF 13" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-                        <p style="font-style: italic; color: #666; font-size: 13px; margin-top: 10px;">
-                            Imagem meramente ilustrativa. Para o preenchimento dessas informações, consulte a sua contabilidade.
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Etapa 3 -->
-            <div class="step">
-                <div class="step-header" onclick="toggleStep(this)">
-                    <div class="step-number">3</div>
-                    <h2 class="step-title">Emissão nota teste</h2>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="step-content">
-                    <p>Após a configuração da empresa, será necessário emitir uma <strong>nota de teste no valor de R$ 1,00</strong>, por tipo de nota configurada, para validar a comunicação com o órgão emissor.</p>
-        <p>Solicitamos também que faça o envio do <strong>PDF e XML</strong> da última nota emitida com as mesmas configurações realizadas no eNotas.</p>
-        
-        <!-- Próximo passo -->
-        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #667eea;">
-            <h4 style="margin: 0 0 15px 0; color: #667eea; font-size: 16px;">📋 Próximo passo</h4>
-            
-            <!-- Primeira opção -->
-            <div style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <div style="display: flex; align-items: start; gap: 12px;">
-                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
-                    <div>
-                        <h5 style="margin: 0 0 8px 0; color: #333; font-size: 15px;">Em processo de Onboarding?</h5>
-                        <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.6;">
-                            Informe ao <strong>agente de onboarding</strong>, que está conduzindo o seu atendimento, para prosseguir com a emissão teste.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Segunda opção -->
-            <div style="padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <div style="display: flex; align-items: start; gap: 12px;">
-                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
-                    <div>
-                        <h5 style="margin: 0 0 8px 0; color: #333; font-size: 15px;">Validando uma nova configuração?</h5>
-                        <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.6;">
-                            Caso não esteja em onboarding e apenas deseja validar uma nova configuração realizada, poderá <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773383655949-Como-emitir-uma-nota-teste" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600; border-bottom: 2px solid #667eea;">seguir esses passos</a>.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-</div> 
-            <!-- Etapa 4 -->
-            <div class="step">
-                <div class="step-header" onclick="toggleStep(this)">
-                    <div class="step-number">4</div>
-                    <h2 class="step-title">Integrar o seu canal de vendas</h2>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="step-content">
-                    <p>Com tudo configurado e testado, você está pronto para integrar o eNotas ao seu canal de vendas e começar a emitir suas notas fiscais de forma automatizada!</p>
-                    
-                    <p>Para isso na plataforma, você deverá ir em <strong>"Gerenciar > Apps"</strong> e selecionar a plataforma que deseja integrar ao eNotas. Basta clicar em <strong>"Ativar"</strong> e seguir com a integração.</p>
-
-                    <div class="gif-container">
-                        <img src="images/img_gif_14.gif" alt="GIF 14" style="max-width: 100%; height: auto; display: block;">
-                    </div>
-
-                    <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f8f5fb 0%, #f0ebf5 100%); border-radius: 12px; border: 2px solid #B8479D;">
-                        <h3 style="color: #B8479D; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center;">
-                            <span style="margin-right: 10px;">📚</span> Artigos de Integrações Nativas
-                        </h3>
-                        
-                        <p style="margin-bottom: 20px; color: #666;">Selecione a plataforma que você utiliza para ver o guia completo de integração:</p>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773432368909--Hotmart-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_jpeg_1.jpg" alt="Imagem 2" style="max-width: 100%; height: auto;">
-</div> Hotmart
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773432451853-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-IUGU" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_2.png" alt="Imagem 3" style="max-width: 100%; height: auto;">
-</div> Iugu
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773440987533--Kobana-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_3.png" alt="Imagem 4" style="max-width: 100%; height: auto;">
-</div> Kobana
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773472151821--PagSeguro-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_4.png" alt="Imagem 5" style="max-width: 100%; height: auto;">
-</div> PagSeguro
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773426885645--Sympla-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_5.png" alt="Imagem 6" style="max-width: 100%; height: auto;">
-</div> Sympla
-                            </a>
-                            
-                            <a href="#" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center; opacity: 0.6; cursor: default;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_6.png" alt="Imagem 7" style="max-width: 100%; height: auto;">
-</div> Moip
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773416767117--Eventbrite-Como-funciona-a-integra%C3%A7%C3%A3o-com-a-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_7.png" alt="Imagem 8" style="max-width: 100%; height: auto;">
-</div> Eventbrite
-                            </a>
-                            
-                            <a href="#" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center; opacity: 0.6; cursor: default;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_8.png" alt="Imagem 9" style="max-width: 100%; height: auto;">
-</div> Moip Marketplace
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773441486477--PayPal-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_9.png" alt="Imagem 10" style="max-width: 100%; height: auto;">
-</div> PayPal
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773440630413-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-EADbox" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_10.png" alt="Imagem 11" style="max-width: 100%; height: auto;">
-</div> eadBox
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773441209229--Monetizze-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_11.png" alt="Imagem 12" style="max-width: 100%; height: auto;">
-</div> Monetizze
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773462778125--WooCommerce-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_jpeg_2.jpg" alt="Imagem 13" style="max-width: 100%; height: auto;">
-</div> WooCommerce
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773447478285--Pagar-me-Como-habilitar-a-integra%C3%A7%C3%A3o-1-0-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_12.png" alt="Imagem 14" style="max-width: 100%; height: auto;">
-</div> PagarMe 1.0
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773419350157--Pagar-me-Como-habilitar-a-integra%C3%A7%C3%A3o-2-0-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_13.png" alt="Imagem 15" style="max-width: 100%; height: auto;">
-</div> PagarMe 2.0
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773459916301--Eduzz-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_14.png" alt="Imagem 16" style="max-width: 100%; height: auto;">
-</div> Eduzz
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773419526285-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-SambaPlay" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_15.png" alt="Imagem 17" style="max-width: 100%; height: auto;">
-</div> SambaPlay
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773433445005--Vindi-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_16.png" alt="Imagem 18" style="max-width: 100%; height: auto;">
-</div> Vindi
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773472220813--Shopify-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_17.png" alt="Imagem 19" style="max-width: 100%; height: auto;">
-</div> Shopify
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773419614349--Stripe-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_jpeg_3.jpg" alt="Imagem 20" style="max-width: 100%; height: auto;">
-</div> Stripe
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Integrações Não Nativas -->
-                    <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #e8f5f3 0%, #d4ede8 100%); border-radius: 12px; border: 2px solid #00BFA5;">
-                        <h3 style="color: #00BFA5; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center;">
-                            <span style="margin-right: 10px;"></span> Artigos de Integrações Não Nativas
-                        </h3>
-                        
-                        <p style="margin-bottom: 20px; color: #666;">Plataformas com integração via webhook ou API:</p>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px;">
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773471206797-Como-habilitar-a-integra%C3%A7%C3%A3o-da-Kiwify-com-o-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_18.png" alt="Imagem 21" style="max-width: 100%; height: auto;">
-</div> Kiwify
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773471321485-Como-habilitar-a-integra%C3%A7%C3%A3o-da-Lastlink-com-o-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_19.png" alt="Imagem 22" style="max-width: 100%; height: auto;">
-</div> Lastlink
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773462449293--Tutory-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_20.png" alt="Imagem 23" style="max-width: 100%; height: auto;">
-</div> Tutory
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773434643341--Hubla-Como-habilitar-a-integra%C3%A7%C3%A3o-na-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_png_21.png" alt="Imagem 24" style="max-width: 100%; height: auto;">
-</div> Hubla
-                            </a>
-                            
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773443765389--Ticket-and-Go-Como-habilitar-a-integra%C3%A7%C3%A3o-com-a-eNotas" target="_blank" style="display: flex; align-items: center; justify-content: center; padding: 12px 16px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; transition: all 0.3s ease; text-align: center;">
-                                <div class="image-placeholder">
-    <img src="images/img_jpeg_4.jpg" alt="Imagem 25" style="max-width: 100%; height: auto;">
-</div> Ticket and Go
-                            </a>
-                        </div>
-
-                        <div class="info-box" style="background: #fff9e6; border-left-color: #ffa000; margin: 0;">
-                            <strong> Plataforma diferente?</strong>
-                            <p style="margin-top: 8px;">Caso você utilize alguma plataforma diferente dessas, informe ao agente do seu atendimento em onboarding, ou valide com o nosso time de <a href="https://atendimento.enotas.com.br/hc/pt-br/requests/new" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600; border-bottom: 2px solid #667eea;">suporte</a>.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Etapa 5 -->
-            <div class="step">
-                <div class="step-header" onclick="toggleStep(this)">
-                    <div class="step-number">5</div>
-                    <h2 class="step-title">Importação de vendas</h2>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="step-content">
-                   <p>Caso o seu plano permita a realização de importação de vendas antigas ou então deseje realizar o upgrade para seguir com a importação, informe ao agente que está conduzindo o seu atendimento em onboarding, para que prossiga com a importação.</p>
-    <p>Se você não estiver sendo atendido em onboarding, poderá solicitar por <a href="https://atendimento.enotas.com.br/hc/pt-br/requests/new" target="_blank" style="color: #17c3b2; text-decoration: none; font-weight: 600; border-bottom: 2px solid #17c3b2;">aqui</a>.</p>
-
-
-                    <div style="margin-top: 25px; padding: 20px; background: white; border-radius: 8px; border: 2px solid #e0e0e0; overflow-x: auto;">
-                        <p style="margin-bottom: 15px; color: #666; font-size: 14px;">
-                            <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773756727565-Meu-plano-permite-importa%C3%A7%C3%A3o-de-vendas-antigas" target="_blank" style="border-bottom: none;">Mais detalhes</a>
-                        </p>
-                        
-                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                            <thead>
-                                <tr style="background: linear-gradient(135deg, #B8479D 0%, #9c3d85 100%); color: white;">
-                                    <th style="padding: 14px; text-align: left; border: 1px solid #ddd;">Plano</th>
-                                    <th style="padding: 14px; text-align: left; border: 1px solid #ddd;">Importação de vendas antigas</th>
-                                    <th style="padding: 14px; text-align: left; border: 1px solid #ddd;">Quantidade de vendas e Valores</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600; color: #333;">Básico - Mensal e Anual</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <span style="color: #d32f2f; font-weight: 600;"> Não inclui</span>, feita mediante cobrança<br>
-                                        <span style="font-size: 13px; color: #666;">(mais detalhes: <a href="https://atendimento.enotas.com.br/hc/pt-br/articles/35773696093581-Importa%C3%A7%C3%A3o-de-vendas-no-plano-b%C3%A1sico" target="_blank" style="border-bottom: none;">importação de vendas antigas nos planos básico</a>)</span>
-                                    </td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        Taxa fixa: <strong>R$ 197,00</strong> + <strong>R$ 0,97</strong> por venda
-                                    </td>
-                                </tr>
-                                <tr style="background: #f9f9f9;">
-                                    <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600; color: #333;">Plus - Mensal</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <span style="color: #00BFA5; font-weight: 600;"> Inclusa</span>, até 300 Vendas
-                                    </td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <strong>Até 300:</strong> incluso no plano<br>
-                                        <strong>Excedente:</strong> R$ 0,97 por venda
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600; color: #333;">Pro - Mensal</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <span style="color: #00BFA5; font-weight: 600;"> Inclusa</span>, até 500 Vendas
-                                    </td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <strong>Até 500:</strong> incluso no plano<br>
-                                        <strong>Excedente:</strong> R$ 0,97 por venda
-                                    </td>
-                                </tr>
-                                <tr style="background: #f9f9f9;">
-                                    <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600; color: #333;">Plus e Pro - Anual</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <span style="color: #00BFA5; font-weight: 600;"> Importação ilimitada</span>
-                                    </td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <strong style="color: #00BFA5;">Sem cobrança</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600; color: #333;">Business</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <span style="color: #00BFA5; font-weight: 600;"> Importação ilimitada</span>
-                                    </td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <strong style="color: #00BFA5;">Sem cobrança</strong>
-                                    </td>
-                                </tr>
-                                <tr style="background: #f9f9f9;">
-                                    <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600; color: #333;">Enterprise</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <span style="color: #00BFA5; font-weight: 600;"> Importação ilimitada</span>
-                                    </td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <strong style="color: #00BFA5;">Sem cobrança</strong>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+    <div class="icon-wrap">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.5c2.8 1.7 4.5 4.7 4.5 8.5 0 2.4-.7 4.6-1.8 6.3L12 21.5l-2.7-4.2C8.2 15.6 7.5 13.4 7.5 11c0-3.8 1.7-6.8 4.5-8.5z"/>
+        <circle cx="12" cy="10.5" r="1.8" fill="#ffffff" stroke="none"/>
+        <path d="M7.5 14c-1.8.4-2.8 1.7-3.2 4 2.1-.4 3.4-1.4 4-3"/>
+        <path d="M16.5 14c1.8.4 2.8 1.7 3.2 4-2.1-.4-3.4-1.4-4-3"/>
+      </svg>
     </div>
 
-    <script>
-        function toggleStep(header) {
-            const content = header.nextElementSibling;
-            const arrow = header.querySelector('.arrow');
-            
-            // Toggle classes
-            content.classList.toggle('open');
-            arrow.classList.toggle('open');
-        }
+    <h1>O guia de configurações foi atualizado</h1>
+    <p class="subtitle">
+      Unificamos todas as configurações em um novo guia interativo.<br>
+      Você será redirecionado automaticamente.
+    </p>
 
-        function toggleSubStep(header) {
-            const content = header.nextElementSibling;
-            const arrow = header.querySelector('.substep-arrow');
-            
-            // Toggle classes
-            content.classList.toggle('open');
-            arrow.classList.toggle('open');
-        }
-
-        function toggleNotaInfo(tipo) {
-            const checkbox = document.getElementById(tipo + '-check');
-            const info = document.getElementById(tipo + '-info');
-            
-            if (checkbox.checked) {
-                info.style.display = 'block';
-            } else {
-                info.style.display = 'none';
-            }
-        }
-
-        function toggleMEIInfo() {
-            const meiChecked = document.getElementById('mei-option').checked;
-            const meChecked = document.getElementById('me-option').checked;
-            const eppChecked = document.getElementById('epp-option').checked;
-            const medioChecked = document.getElementById('medio-option').checked;
-            const grandeChecked = document.getElementById('grande-option').checked;
-            
-            const meiInfo = document.getElementById('mei-info');
-            const meInfo = document.getElementById('me-info');
-            const eppInfo = document.getElementById('epp-info');
-            const medioInfo = document.getElementById('medio-info');
-            const grandeInfo = document.getElementById('grande-info');
-            
-            // Limpar todas as seções
-            meiInfo.style.display = 'none';
-            meInfo.style.display = 'none';
-            eppInfo.style.display = 'none';
-            medioInfo.style.display = 'none';
-            grandeInfo.style.display = 'none';
-            
-            // Mostrar apenas a selecionada
-            if (meiChecked) {
-                meiInfo.style.display = 'block';
-            } else if (meChecked) {
-                meInfo.style.display = 'block';
-            } else if (eppChecked) {
-                eppInfo.style.display = 'block';
-            } else if (medioChecked) {
-                medioInfo.style.display = 'block';
-            } else if (grandeChecked) {
-                grandeInfo.style.display = 'block';
-            }
-        }
-
-        // ===== Pop-up Contabilidade =====
-        function showPopup() {
-            const popup = document.getElementById('popup-contabilidade');
-            popup.classList.add('show');
-        }
-
-        function closePopup() {
-            const popup = document.getElementById('popup-contabilidade');
-            popup.classList.remove('show');
-        }
-
-        function minimizePopup() {
-            const popup = document.getElementById('popup-contabilidade');
-            popup.classList.add('minimized');
-        }
-
-        function maximizePopup() {
-            const popup = document.getElementById('popup-contabilidade');
-            popup.classList.remove('minimized');
-        }
-
-        // Ao clicar no pop-up contabilidade minimizado, expandir novamente
-        document.getElementById('popup-contabilidade').addEventListener('click', function(e) {
-            if (this.classList.contains('minimized')) {
-                maximizePopup();
-            }
-        });
-
-        // ===== Inicialização =====
-        // Mostrar pop-up Contabilidade após 10 segundos
-        setTimeout(showPopup, 10000);
-    </script>
-    <!-- Footer -->
-    <div style="padding: 30px 20px 40px 20px; text-align: center; color: #666; font-size: 14px;">
-        <p style="margin: 0;">
-            © 2026 eNotas - Todos os direitos reservados. | <a href="https://enotas.com.br/termos-de-uso/" target="_blank" style="color: #00BFA5; text-decoration: none; font-weight: 500;">Termos e condições de uso.</a>
-        </p>
+    <div class="countdown-wrap">
+      <p class="countdown-label">Redirecionando em</p>
+      <div class="countdown-number" id="countdown">7</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
     </div>
 
-    <script>
-        // Envia a altura do conteúdo para a página pai (iframe)
-        function enviarAltura() {
-            const altura = document.body.scrollHeight;
-            window.parent.postMessage({
-                type: 'resize',
-                height: altura
-            }, '*');
-        }
-        
-        // Envia ao carregar
-        window.addEventListener('load', enviarAltura);
-        
-        // Envia quando houver mudanças (accordion abrindo/fechando)
-        const observer = new MutationObserver(enviarAltura);
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true
-        });
-        
-        // Também envia a cada 500ms para garantir
-        setInterval(enviarAltura, 500);
-    </script>
+    <a class="btn-redirect" href="https://enotas.com.br/guiaconfiguracoes/">
+      Ir agora para o guia de configurações
+    </a>
+    <br>
+    <button class="btn-skip" onclick="cancelRedirect()">Cancelar redirecionamento</button>
+  </div>
 
+  <script>
+    let seconds = 7;
+    let timer = null;
+    let redirectTimer = null;
+
+    function tick() {
+      seconds--;
+      document.getElementById("countdown").textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = "https://enotas.com.br/guiaconfiguracoes/";
+      }
+    }
+
+    function cancelRedirect() {
+      clearInterval(timer);
+      clearTimeout(redirectTimer);
+      document.getElementById("progressBar").style.animation = "none";
+      document.getElementById("progressBar").style.transform = "scaleX(0)";
+      document.getElementById("countdown").textContent = "—";
+      document.querySelector(".countdown-label").textContent = "Redirecionamento cancelado";
+      document.querySelector(".btn-skip").style.display = "none";
+    }
+
+    timer = setInterval(tick, 1000);
+  </script>
 </body>
 </html>
